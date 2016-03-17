@@ -25,7 +25,9 @@ public class FBPSyntaxHighlighter extends SyntaxHighlighterBase {
     static final TextAttributesKey PARENTHESES = createTextAttributesKey("FBP_PARENTHESES", DefaultLanguageHighlighterColors.PARENTHESES);
     static final TextAttributesKey NUMBER = createTextAttributesKey("FBP_NUMBER", DefaultLanguageHighlighterColors.NUMBER);
     static final TextAttributesKey BAD_CHARACTER = createTextAttributesKey("FBP_BAD_CHAR", HighlighterColors.BAD_CHARACTER);
-    private static final TextAttributesKey COLON = createTextAttributesKey("FBP_COLON", DefaultLanguageHighlighterColors.OPERATION_SIGN);
+    static final TextAttributesKey COLON = createTextAttributesKey("FBP_COLON", DefaultLanguageHighlighterColors.OPERATION_SIGN);
+    static final TextAttributesKey COMPONENT = createTextAttributesKey("FBP_PARAMS", DefaultLanguageHighlighterColors.PARAMETER);
+    static final TextAttributesKey METADATA = createTextAttributesKey("FBP_METADATA", DefaultLanguageHighlighterColors.METADATA);
 
 
     private static final TextAttributesKey[] EMPTY_KEYS = new TextAttributesKey[0];
@@ -64,6 +66,10 @@ public class FBPSyntaxHighlighter extends SyntaxHighlighterBase {
             item = COLON;
         } else if (tokenType.equals(TokenType.BAD_CHARACTER)) {
             item = BAD_CHARACTER;
+        } else if (tokenType.equals(FBPTypes.COMPONENT)) {
+            item = COMPONENT;
+        } else if (tokenType.equals(FBPTypes.METADATA)) {
+            item = METADATA;
         }
 
         return item == null ? EMPTY_KEYS : SyntaxHighlighterBase.pack(item);

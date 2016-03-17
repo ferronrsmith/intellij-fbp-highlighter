@@ -17,14 +17,17 @@ import java.util.Map;
  */
 public class FBPColorSettingsPage implements ColorSettingsPage {
     private static final AttributesDescriptor[] DESCRIPTORS = new AttributesDescriptor[]{
-            new AttributesDescriptor("Key", FBPSyntaxHighlighter.KEY),
+            new AttributesDescriptor("Keyword", FBPSyntaxHighlighter.KEY),
             new AttributesDescriptor("Operator", FBPSyntaxHighlighter.OP),
             new AttributesDescriptor("Comment", FBPSyntaxHighlighter.COMMENT),
             new AttributesDescriptor("Brackets", FBPSyntaxHighlighter.BRACKETS),
-            new AttributesDescriptor("Parens", FBPSyntaxHighlighter.PARENTHESES),
+            new AttributesDescriptor("Parentheses", FBPSyntaxHighlighter.PARENTHESES),
             new AttributesDescriptor("Number", FBPSyntaxHighlighter.NUMBER),
             new AttributesDescriptor("String", FBPSyntaxHighlighter.STRING),
-            new AttributesDescriptor("Bad Char", FBPSyntaxHighlighter.BAD_CHARACTER)
+            new AttributesDescriptor("Bad Char", FBPSyntaxHighlighter.BAD_CHARACTER),
+            new AttributesDescriptor("MetaData", FBPSyntaxHighlighter.METADATA),
+            new AttributesDescriptor("Component", FBPSyntaxHighlighter.COMPONENT),
+            new AttributesDescriptor("Colon", FBPSyntaxHighlighter.COLON)
             };
 
     @Nullable
