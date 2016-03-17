@@ -1,0 +1,8 @@
+# This is a FBP comment block
+SplitInput(core/Split) OUT -> OBJECT GetSourceParentProperty(LodashGet:path=param,default_value=param)
+SplitInput(core/Split) OUT -> IN2 LodashMerge(LodashMerge)
+
+GetSourceParentProperty OUT -> IN1 LodashMerge(LodashMerge)
+
+GetContentRecord OUT -> IN2 LodashMerge
+'referenceKey' -> PATH GetLookupIdValues

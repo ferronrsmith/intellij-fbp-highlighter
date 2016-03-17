@@ -1,0 +1,75 @@
+{
+    parserClass="com.fbp.parser.FBPParser"
+    parserUtilClass="com.fbp.parser.FBPParserUtil"
+    extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+    psiClassPrefix="FBP"
+    psiImplClassSuffix="Impl"
+    psiPackage="com.fbp.psi"
+    psiImplPackage="com.fbp.psi.impl"
+    elementTypeHolderClass="com.fbp.psi.FBPTypes"
+    elementTypeClass="com.fbp.psi.FBPElementType"
+    tokenTypeClass="com.fbp.psi.FBPTokenType"
+    psiImplUtilClass="com.fbp.psi.impl.FBPPsiImplUtil"
+
+    tokens = [
+        WHITE_SPACE='regexp:\s+'
+        LP = '('
+        RP = ')'
+        LB = '['
+        RB = ']'
+        portToken='regexp:(INPORT|EXPORT|OUTPORT)'
+        comment='regexp:#.*'
+        number='regexp:\d+(\.\d*)?'
+//        id='regexp:[a-zA-Z0-9_/]*'
+        string="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
+        op = '->'
+        COLON = ':'
+        COMMA = ','
+        EQ = '='
+        DOT = '.'
+        char = 'regexp:[\n\r\u2028\u2029]'
+//        priv='regexp:[A-Za-z.0-9_]+'
+//        pub='regexp:[A-Z0-9_]+'
+        portname='regexp:[A-Z.0-9_]+'
+        nodename='regexp:[a-zA-Z0-9_\-/]+'
+//        comp='regexp:[a-zA-Z/\-0-9_]+'
+        compMeta='regexp:[a-zA-Z/=_,0-9]+'
+    ]
+
+}
+
+root ::= root_item *
+
+private root_item ::= !<<eof>> (COMMENT|property)
+
+property ::= stmt lineTerm?
+
+stmt ::= connection
+
+// not the correct grammar but this will have to work until
+//imp ::= compMeta portname COLON portname lineTerm
+
+connection ::= bridge op connection | bridge
+
+bridge ::= port nodeRule port |
+    string |
+    rightlet |
+    leftlet |
+
+leftlet ::= nodeRule portWithIndex | nodeRule port
+
+rightlet ::= portWithIndex nodeRule | port nodeRule
+
+port ::= portname
+
+nodeRule ::= nodename component?
+
+component ::= LP nodename? metadata? RP
+
+metadata ::= COLON compMeta
+
+lineTerm ::= stmt COMMA? comment? char?
+
+portWithIndex ::= portname LB number RB
+
+//white_space ::= space
