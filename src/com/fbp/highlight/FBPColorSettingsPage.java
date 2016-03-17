@@ -22,9 +22,9 @@ public class FBPColorSettingsPage implements ColorSettingsPage {
             new AttributesDescriptor("Comment", FBPSyntaxHighlighter.COMMENT),
             new AttributesDescriptor("Brackets", FBPSyntaxHighlighter.BRACKETS),
             new AttributesDescriptor("Parens", FBPSyntaxHighlighter.PARENTHESES),
-            new AttributesDescriptor("Comment", FBPSyntaxHighlighter.COMMENT),
             new AttributesDescriptor("Number", FBPSyntaxHighlighter.NUMBER),
-            new AttributesDescriptor("String", FBPSyntaxHighlighter.STRING)
+            new AttributesDescriptor("String", FBPSyntaxHighlighter.STRING),
+            new AttributesDescriptor("Bad Char", FBPSyntaxHighlighter.BAD_CHARACTER)
             };
 
     @Nullable

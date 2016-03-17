@@ -4,8 +4,10 @@ import com.fbp.parser.FBPLexerAdapter;
 import com.fbp.psi.FBPTypes;
 import com.intellij.lexer.Lexer;
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
+import com.intellij.openapi.editor.HighlighterColors;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
+import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,15 +17,14 @@ import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAtt
  * Created by ferron on 3/16/16.
  */
 public class FBPSyntaxHighlighter extends SyntaxHighlighterBase {
-//    public static final TextAttributesKey SEPARATOR = createTextAttributesKey("FBP_SEPARATOR", DefaultLanguageHighlighterColors.OPERATION_SIGN);
     static final TextAttributesKey KEY = createTextAttributesKey("FBP_KEY", DefaultLanguageHighlighterColors.KEYWORD);
     static final TextAttributesKey OP = createTextAttributesKey("OP", DefaultLanguageHighlighterColors.KEYWORD);
     static final TextAttributesKey STRING = createTextAttributesKey("FBP_STRING", DefaultLanguageHighlighterColors.STRING);
     static final TextAttributesKey COMMENT = createTextAttributesKey("FBP_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT);
     static final TextAttributesKey BRACKETS = createTextAttributesKey("FBP_BRACKETS", DefaultLanguageHighlighterColors.BRACKETS);
-//    public static final TextAttributesKey BRACES = createTextAttributesKey("FBP_BRACES", DefaultLanguageHighlighterColors.BRACES);
     static final TextAttributesKey PARENTHESES = createTextAttributesKey("FBP_PARENTHESES", DefaultLanguageHighlighterColors.PARENTHESES);
     static final TextAttributesKey NUMBER = createTextAttributesKey("FBP_NUMBER", DefaultLanguageHighlighterColors.NUMBER);
+    static final TextAttributesKey BAD_CHARACTER = createTextAttributesKey("FBP_BAD_CHAR", HighlighterColors.BAD_CHARACTER);
     private static final TextAttributesKey COLON = createTextAttributesKey("FBP_COLON", DefaultLanguageHighlighterColors.OPERATION_SIGN);
 
 
@@ -61,6 +62,8 @@ public class FBPSyntaxHighlighter extends SyntaxHighlighterBase {
             item = STRING;
         } else if (tokenType.equals(FBPTypes.COLON)) {
             item = COLON;
+        } else if (tokenType.equals(TokenType.BAD_CHARACTER)) {
+            item = BAD_CHARACTER;
         }
 
         return item == null ? EMPTY_KEYS : SyntaxHighlighterBase.pack(item);

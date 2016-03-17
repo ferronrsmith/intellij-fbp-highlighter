@@ -1,0 +1,49 @@
+'' -> QUERY QueryDataCollection(QueryDataCollection)
+'localhost' -> DATAREPOSERVICE_HOST QueryDataCollection
+'4444' -> DATAREPOSERVICE_PORT QueryDataCollection
+#'ute' -> DATAREPO_CODE QueryDataCollection
+#'novaContentSourceClean' -> DATAREPO_COLLECTION_CODE QueryDataCollection
+'tsc' -> DATAREPO_CODE QueryDataCollection
+'products-source' -> DATAREPO_COLLECTION_CODE QueryDataCollection
+
+
+
+'doc' -> PATH SetDoc(LodashSet:path=param)
+QueryDataCollection OUT -> VALUE SetDoc(LodashSet:path=param,object=param)
+
+'filter.term.taxonomyCode' -> PATH SetFilter(LodashSet:path=param,value=param)
+#'novaCategoryTaxonomy' -> VALUE SetFilter
+'dimensionValueTaxonomy' -> VALUE SetFilter
+
+'{}' -> IN ParseJson351(strings/ParseJson) OUT -> OBJECT SetDoc OUT -> OBJECT SetFilter
+
+#'http://192.168.99.100:9200/taxonomy/novaContent/_percolate' -> URL PostToElastic(CallWebService)
+'http://192.168.99.100:9200/taxonomy-tsc/product/_percolate' -> URL PostToElastic(CallWebService)
+'{"Content-Type": "application/json", "Accept": "application/json"}' -> IN ParseJson876(strings/ParseJson) OUT -> H PostToElastic
+
+SetFilter OUT -> IN PostToElastic
+
+PostToElastic RESULT -> OBJECT GetTaxonomyIds(LodashGet:path=param,default_value=param)
+'body.matches' -> PATH GetTaxonomyIds
+'null' -> IN ParseJson416(strings/ParseJson) OUT -> DEFAULT_VALUE GetTaxonomyIds
+
+'docs' -> PATH SetTaxonomyDocs(LodashSet:path=param,object=param)
+'{}' -> IN ParseJson318(strings/ParseJson) OUT -> OBJECT SetTaxonomyDocs
+GetTaxonomyIds OUT -> VALUE SetTaxonomyDocs
+
+#'http://192.168.99.100:9200/taxonomy/.percolator/_mget' -> URL GetTaxonomyDocs(CallWebService)
+'http://192.168.99.100:9200/taxonomy-tsc/.percolator/_mget' -> URL GetTaxonomyDocs(CallWebService)
+'{"Content-Type": "application/json", "Accept": "application/json"}' -> IN ParseJson996(strings/ParseJson) OUT -> H GetTaxonomyDocs
+
+SetTaxonomyDocs OUT -> IN GetTaxonomyDocs RESULT -> OBJECT ExtractDocs(LodashGet:path=param,default_value=param)
+'body.docs' -> PATH ExtractDocs
+'null' -> IN ParseJson416(strings/ParseJson) OUT -> DEFAULT_VALUE ExtractDocs
+
+ExtractDocs OUT -> OBJECT KeepSourceNode(LodashGetArray:path=param,default_value=param)
+'_source' -> PATH KeepSourceNode
+'null' -> IN ParseJson433(strings/ParseJson) OUT -> DEFAULT_VALUE KeepSourceNode
+
+KeepSourceNode OUT -> TAXONOMY_LOOKUP_LIST ApplyTaxonomyLookupList(ApplyTaxonomyLookupList)
+QueryDataCollection OUT -> BASE_RECORD ApplyTaxonomyLookupList
+
+ApplyTaxonomyLookupList OUT -> IN Display(core/Output)

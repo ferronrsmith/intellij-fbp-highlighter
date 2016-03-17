@@ -27,7 +27,7 @@
         <!-- Add your extensions here -->
         <fileTypeFactory implementation="com.fbp.lang.FBPFileTypeFactory"/>
         <lang.parserDefinition language="FBP" implementationClass="com.fbp.psi.FBPParserDefinition"/>
-        <lang.syntaxHighlighterFactory implementationClass="com.fbp.highlight.FBPSyntaxHighlighterFactory"/>
+        <lang.syntaxHighlighterFactory language="FBP" implementationClass="com.fbp.highlight.FBPSyntaxHighlighterFactory"/>
         <colorSettingsPage implementation="com.fbp.highlight.FBPColorSettingsPage"/>
     </extensions>
 

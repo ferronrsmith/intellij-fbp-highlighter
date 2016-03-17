@@ -40,21 +40,21 @@
 
 root ::= root_item *
 
-private root_item ::= !<<eof>> (COMMENT|property)
+private root_item ::= !<<eof>> property
 
 property ::= stmt lineTerm?
 
-stmt ::= connection
+stmt ::= imp | connection
 
 // not the correct grammar but this will have to work until
-//imp ::= compMeta portname COLON portname lineTerm
+imp ::= compMeta portname COLON portname lineTerm
 
 connection ::= bridge op connection | bridge
 
 bridge ::= port nodeRule port |
     string |
     rightlet |
-    leftlet |
+    leftlet
 
 leftlet ::= nodeRule portWithIndex | nodeRule port
 
@@ -68,7 +68,7 @@ component ::= LP nodename? metadata? RP
 
 metadata ::= COLON compMeta
 
-lineTerm ::= stmt COMMA? comment? char?
+lineTerm ::= char?
 
 portWithIndex ::= portname LB number RB
 
