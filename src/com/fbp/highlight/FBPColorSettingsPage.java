@@ -27,7 +27,8 @@ public class FBPColorSettingsPage implements ColorSettingsPage {
             new AttributesDescriptor("Bad Char", FBPSyntaxHighlighter.BAD_CHARACTER),
             new AttributesDescriptor("MetaData", FBPSyntaxHighlighter.METADATA),
             new AttributesDescriptor("Component", FBPSyntaxHighlighter.COMPONENT),
-            new AttributesDescriptor("Colon", FBPSyntaxHighlighter.COLON)
+            new AttributesDescriptor("Colon", FBPSyntaxHighlighter.COLON),
+            new AttributesDescriptor("NodeName", FBPSyntaxHighlighter.NODENAME)
             };
 
     @Nullable

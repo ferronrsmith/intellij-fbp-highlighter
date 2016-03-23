@@ -28,6 +28,7 @@ public class FBPSyntaxHighlighter extends SyntaxHighlighterBase {
     static final TextAttributesKey COLON = createTextAttributesKey("FBP_COLON", DefaultLanguageHighlighterColors.OPERATION_SIGN);
     static final TextAttributesKey COMPONENT = createTextAttributesKey("FBP_PARAMS", DefaultLanguageHighlighterColors.PARAMETER);
     static final TextAttributesKey METADATA = createTextAttributesKey("FBP_METADATA", DefaultLanguageHighlighterColors.METADATA);
+    static final TextAttributesKey NODENAME = createTextAttributesKey("FBP_NODENAME", DefaultLanguageHighlighterColors.FUNCTION_DECLARATION);
 
 
     private static final TextAttributesKey[] EMPTY_KEYS = new TextAttributesKey[0];
@@ -47,6 +48,8 @@ public class FBPSyntaxHighlighter extends SyntaxHighlighterBase {
         if (tokenType.equals(FBPTypes.OP)) {
             item = OP;
         } else if (tokenType.equals(FBPTypes.PORTNAME)) {
+            item = KEY;
+        } else if (tokenType.equals(FBPTypes.PORT)) {
             item = KEY;
         } else if (tokenType.equals(FBPTypes.COMMENT)) {
             item = COMMENT;
@@ -70,6 +73,8 @@ public class FBPSyntaxHighlighter extends SyntaxHighlighterBase {
             item = COMPONENT;
         } else if (tokenType.equals(FBPTypes.METADATA)) {
             item = METADATA;
+        } else if (tokenType.equals(FBPTypes.NODENAME)) {
+            item = NODENAME;
         }
 
         return item == null ? EMPTY_KEYS : SyntaxHighlighterBase.pack(item);
