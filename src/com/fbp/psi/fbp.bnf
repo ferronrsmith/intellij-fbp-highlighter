@@ -42,7 +42,7 @@ root ::= root_item *
 
 private root_item ::= !<<eof>> property
 
-property ::= stmt lineTerm?
+property ::= stmt lineTerm
 
 stmt ::= imp | connection
 
